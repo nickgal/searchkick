@@ -239,7 +239,9 @@ module Searchkick
       else
         params = {
           scroll: options[:scroll],
-          scroll_id: scroll_id
+          body: {
+            scroll_id: scroll_id
+          }
         }
 
         begin
@@ -260,7 +262,7 @@ module Searchkick
         # try to clear scroll
         # not required as scroll will expire
         # but there is a cost to open scrolls
-        Searchkick.client.clear_scroll(scroll_id: scroll_id)
+        Searchkick.client.clear_scroll(body: { scroll_id: scroll_id })
       rescue Elasticsearch::Transport::Transport::Error
         # do nothing
       end
